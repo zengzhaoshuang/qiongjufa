@@ -1,0 +1,80 @@
+#include <stdio.h> //包含输入输出函数
+#include <stdlib.h>//包含动态内存分配函数
+#define max_input 50//定义最大输入量，数字可更改
+int max_value;//定义最大价值量
+int v[1000000],x[1000000];//物品的价值,x[i]表示选择当前物品
+int input(int *a)//a为要输入的数组，返回值为实际输入个数，这个数组用来存储约束条件
+{
+    int i;
+    for(i=0;i<max_input;i++)
+        if(scanf("%d",&a[i])!=1) break;//输入并判断
+    return i;//返回输入总数
+}
+int digui(int d,int m,int n,int dv,int ys)//定义一个digui函数，定义递归深度d，约束数m，变量数n，当前价值量dv，约束条件ys
+{
+	if(i>n)//递归结束
+	{
+		if(dv>max_vaule)//判断
+		{
+			max_value=dv;//当前价值量赋给最大价值量
+			
+		}
+	}
+	else
+		for (int j=0;j<=1;j++)//判断第i个物品是否要放进来
+		{
+			x[i]=j;
+			if (dv+x[i]<=ys)//每一行的所取量小于等于每一行的约束条件
+			{
+			
+				dv=dv+v[i]*x[i];//价值量增加
+				digui(i+1,dv,v[i]);//递归调用，继续循坏
+				dv=dv-v[i]*x[i];//去掉没有用的物品
+			}
+		}
+}
+int main()
+{
+	max_vaule=0;//定义最大价值量初始值为0
+	int m,n;
+    printf("请输入约束数m和变量数n:\n");
+    scanf("%d%d",&m,&n);
+    printf("请输入物品价值:\n");
+    int **p; //定义二维指针。
+    int i,j; 
+    scanf("%d%d",&m,&n); //输入行数和列数，即约束数和变量数
+    if(m<=0||n<=0) return -1; //行数或列数非法
+    p = (int **) malloc(sizeof(int *) *m);//申请一组一维指针空间，动态申请内存空间
+    for(i=0;i<m;i++)
+        p[i]=(int *)malloc(sizeof(int) *n); //对于每个一维指针，申请一行数据的空间
+     
+    for(i=0;i<m;i++)
+        for(j=0;j<n;j++)
+            scanf("%d",&p[i][j]);//输入第i行第j列的数据。
+     
+    printf("输入的数组为%d行%d列：\n",m,n);
+    for(i=0;i<m;i++)
+    {
+        for(j=0;j<n;j++)//这个循环可以输出一行元素
+            printf("%d ",p[i][j]);//输出i行j列的元素
+        printf("\n");//每行输入结束加换行符。
+    }
+     
+    //释放内存
+    for(i=0; i<m;i++)
+        free(p[i]);
+    free(p);
+    return 0;
+	
+	{
+    int a[max_input];//存储约束条件
+    int h,i;//
+    h = input(a);//h是输入多少个约束条件
+    printf("共计输入%d个数值\n", h);
+    for(i = 0; i < h; i ++)//输出之前输入的数值用来验证
+        printf("%d\n", a[i]);//输出约束条件的值
+         
+    return 0;
+	}
+	printf("最大价值量为:%f",&max_value);
+}
